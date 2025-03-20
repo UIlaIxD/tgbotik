@@ -1,4 +1,5 @@
 import random
+import logging
 import os
 import time
 import asyncio
@@ -8,17 +9,22 @@ from aiogram.filters import Command
 from aiogram.types import Message, Sticker
 from dotenv import load_dotenv
 
+global randvalue
 load_dotenv()
 bot = Bot(os.getenv('TOKEN'))
 dp = Dispatcher() 
 
-caslose = [7, 8, 10, 12, 14, 15, 19, 20, 25, 28, 29, 31, 34, 36, 37, 40, 45, 46, 50, 51, 53, 55, 57]
-casduo = [2, 3, 4, 5, 6, 9, 11, 13, 16, 17, 18, 21, 23, 24, 26, 27, 30, 32, 33, 35, 38, 39, 41, 42, 44, 47, 48, 49, 52, 54, 56, 58, 59, 60, 61, 62, 63]
+caslose = [7, 8, 10, 12, 14, 15, 19, 20, 25, 28, 29, 31, 34, 36, 37, 40, 45, 46, 50, 51, 53, 55, 57, 58]
+casduo = [2, 3, 4, 5, 6, 9, 11, 13, 16, 17, 18, 21, 23, 24, 26, 27, 30, 32, 33, 35, 38, 39, 41, 42, 44, 47, 48, 49, 52, 54, 56, 59, 60, 61, 62, 63]
 caswin = [1, 22, 43, 64]
+
+def rand():
+    global randvalue
+    randvalue = random.randint(1, 2)
 
 @dp.message(Command('ustart'))
 async def start(message: Message):
-    await message.answer("Hello from UIlaI and UIlaIBot(0.5?)\nuse /uhelp for commands")
+    await message.answer("Хеллоу от UIlaIBot(0.5.3?) и UIlaI\nюзай /uhelp для всех комманд\nруссиан лангуаге для Арсена")
  
 @dp.message(Command('uhelp'))
 async def help(message: Message):
@@ -33,16 +39,16 @@ async def slots(message: Message):
     result: Message = await message.answer_dice(DiceEmoji.SLOT_MACHINE)
     # await message.answer(str(result.dice.value))
     if result.dice.value in caslose:
-        time.sleep(1.5)
-        await bot.send_message(message.chat.id, "lose", message_thread_id=message.message_thread_id)
+        time.sleep(3.5)
+        await bot.send_sticker(message.chat.id, "CAACAgIAAxkBAAEOGAABZ9cAAU4tOhA_xWh5K3AftQ1k06vcAAL-LAACfVu4S1e6n5Rzp8WKNgQ", message_thread_id=message.message_thread_id)
         
     elif result.dice.value in casduo:
-        time.sleep(1.5)
-        await bot.send_message(message.chat.id, "duo", message_thread_id=message.message_thread_id)
+        time.sleep(3.5)
+        await bot.send_sticker(message.chat.id, "CAACAgIAAxkBAAEOGbRn2A7bnccY55FdXBpi4wK0tTfKpgACLGgAAgd5wUpCOiZZ-eYknjYE", message_thread_id=message.message_thread_id)
         
     elif result.dice.value in caswin:
-        time.sleep(1.5)
-        await bot.send_message(message.chat.id, "win", message_thread_id=message.message_thread_id)
+        time.sleep(3.5)
+        await bot.send_sticker(message.chat.id, "CAACAgIAAxkBAAEOH1Rn26b6EHUUBCmDPS_m93qgRp8txQACa3AAAnvJ2Ur1BH4FE_wL1zYE", message_thread_id=message.message_thread_id)
         
 
 @dp.message(Command('footbik'))
@@ -50,7 +56,7 @@ async def football(message: Message):
     result: Message = await message.answer_dice(DiceEmoji.FOOTBALL)
     #await message.answer(str(result.dice.value))
     if result.dice.value in [3, 4, 5]:
-        time.sleep(1.5)
+        time.sleep(3.2)
         await bot.send_sticker(message.chat.id, 'CAACAgIAAxkBAAEOF_xn1v_gygl6Me6PlX-E0t-jIV2Q7gAC_2sAAqJDuEqO4dJb14g9izYE', message_thread_id=message.message_thread_id)
         
 
@@ -58,6 +64,15 @@ async def football(message: Message):
 @dp.message(Command('basket'))
 async def basketball(message: Message):
     result: Message = await message.answer_dice(DiceEmoji.BASKETBALL)
+    if result.dice.value in [4, 5]:
+        time.sleep(3)
+        rand()
+        if randvalue == 1:
+            await bot.send_sticker(message.chat.id, "CAACAgIAAxkBAAEOF_5n1v_9lq6aa3E3EsvwHo-bMllVwQAC2mUAAjLHuUh_X0a94GwmTDYE", message_thread_id=message.message_thread_id)
+        elif randvalue == 2:
+            await bot.send_sticker(message.chat.id, "CAACAgIAAxkBAAEOGWVn2AHOHQOmW2y9_Cexb06mgzKZqwAClW0AAuZOwEpGLpiQKo7usDYE", message_thread_id=message.message_thread_id)
+    if result.dice.value == 3:
+            await bot.send_sticker(message.chat.id, "CAACAgIAAxkBAAEOH2Fn27VRl1IUaQ-ClpnXMxwH4TCq-gACVhMAAiY0qEl6mTdDjkmdUzYE", message_thread_id=message.message_thread_id)
     #await message.answer(str(result.dice.value))
     
 
@@ -83,8 +98,12 @@ async def dart(message: Message):
     #await message.answer(str(result.dice.value))
     
 
+async def exit(message: Message):
+    await message.answer("бот отключен")
+
 async def main():
     await dp.start_polling(bot)
+    
 
 if __name__ == '__main__':
     try:
