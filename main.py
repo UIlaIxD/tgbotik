@@ -26,9 +26,18 @@ def rand():
 async def start(message: Message):
     await message.answer("Хеллоу от UIlaIBot(0.5.3?) и UIlaI\nюзай /uhelp для всех комманд\nруссиан лангуаге для Арсена")
  
+ 
 @dp.message(Command('uhelp'))
 async def help(message: Message):
-    await message.answer("используй / вместо ! \n!ustart\n!uhelp\n!777\n!footbik\n!basket\n!kosti\n!bigyaitsa\n!dart")
+    #await message.answer("используй / вместо ! \n!ustart\n!uhelp\n!777\n!footbik\n!basket\n!kosti\n!bigyaitsa\n!dart")
+    await message.answer("пошел наху")
+
+
+@dp.message(F.text.lower() == "p")
+async def poslat(message: Message):
+    m = message.reply_to_message.message_id
+    await bot.delete_message(message.chat.id, message.message_id)
+    await bot.send_message(message.chat.id, "динаху", reply_to_message_id=m)
     
 
 @dp.message(Command('777'))
