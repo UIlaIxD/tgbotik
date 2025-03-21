@@ -29,7 +29,7 @@ async def help(message: Message):
 async def slots(message: Message):
     await bot.send_sticker(message.chat.id, 'CAACAgIAAxkBAAEOF_hn1v7eMRPeKjHV3MEM24j6-MCHUwACZXMAAvjhsEpI0O_5SB1XnjYE', message_thread_id=message.message_thread_id)
     time.sleep(2.2)
-    await bot.delete_message(message.chat.id, message.message_id+1)
+    await bot.delete_message(message.chat.id, message.message_id)
     result: Message = await message.answer_dice(DiceEmoji.SLOT_MACHINE)
     # await message.answer(str(result.dice.value))
     if result.dice.value in caslose:
