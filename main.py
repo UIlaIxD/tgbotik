@@ -65,16 +65,20 @@ async def football(message: Message):
 async def basketball(message: Message):
     result: Message = await message.answer_dice(DiceEmoji.BASKETBALL)
     if result.dice.value in [4, 5]:
-        time.sleep(3)
         rand()
         if randvalue == 1:
+            time.sleep(3.7)
             await bot.send_sticker(message.chat.id, "CAACAgIAAxkBAAEOF_5n1v_9lq6aa3E3EsvwHo-bMllVwQAC2mUAAjLHuUh_X0a94GwmTDYE", message_thread_id=message.message_thread_id)
         elif randvalue == 2:
+            time.sleep(3.7)
             await bot.send_sticker(message.chat.id, "CAACAgIAAxkBAAEOGWVn2AHOHQOmW2y9_Cexb06mgzKZqwAClW0AAuZOwEpGLpiQKo7usDYE", message_thread_id=message.message_thread_id)
     if result.dice.value == 3:
+            time.sleep(3.7)
             await bot.send_sticker(message.chat.id, "CAACAgIAAxkBAAEOH2Fn27VRl1IUaQ-ClpnXMxwH4TCq-gACVhMAAiY0qEl6mTdDjkmdUzYE", message_thread_id=message.message_thread_id)
     #await message.answer(str(result.dice.value))
-    
+    if result.dice.value in [1, 2]:
+        time.sleep(3.7)
+        await bot.send_sticker(message.chat.id, "CAACAgIAAxkBAAEOIM1n3PakyNYKgBShAf6IAXVMwBOzewACoQoAAkPzkEsBtfl0U9zjOjYE", message_thread_id=message.message_thread_id)
 
 @dp.message(Command('kosti'))
 async def dice(message: Message):
@@ -95,11 +99,10 @@ async def bowling(message: Message):
 @dp.message(Command('dart'))
 async def dart(message: Message):
     result: Message = await message.answer_dice(DiceEmoji.DART)
-    #await message.answer(str(result.dice.value))
+    await message.answer(str(result.dice.value))
     
 
-async def exit(message: Message):
-    await message.answer("бот отключен")
+
 
 async def main():
     await dp.start_polling(bot)
