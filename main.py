@@ -5,7 +5,7 @@ import time
 import asyncio
 from aiogram import Dispatcher, Bot, F
 from aiogram.types.dice import DiceEmoji
-from aiogram.filters import Command
+from aiogram.filters import Command, CommandObject
 from aiogram.types import Message, Sticker
 from dotenv import load_dotenv
 
@@ -24,7 +24,7 @@ def rand():
 
 @dp.message(Command('ustart'))
 async def start(message: Message):
-    await message.answer("Хеллоу от UIlaIBot(0.5.3?) и UIlaI\nюзай /uhelp для всех комманд\nруссиан лангуаге для Арсена")
+    await message.answer("Хеллоу от UIlaIBot(0.6.0?) и UIlaI\nюзай /uhelp для всех комманд\nруссиан лангуаге для Арсена")
  
  
 @dp.message(Command('uhelp'))
@@ -38,6 +38,29 @@ async def poslat(message: Message):
     m = message.reply_to_message.message_id
     await bot.delete_message(message.chat.id, message.message_id)
     await bot.send_message(message.chat.id, "динаху", reply_to_message_id=m)
+
+@dp.message(Command('s'))
+async def echo(message: Message, command: CommandObject):
+    saying = command.args
+    await bot.delete_message(message.chat.id, message.message_id)
+    if message.from_user.id == 1307118150:
+        if message.reply_to_message != None:
+            m = message.reply_to_message.message_id
+            await bot.send_message(message.chat.id, saying, reply_to_message_id=m)
+        else:
+            await bot.send_message(message.chat.id, saying)
+    else:
+        await message.answer("ю донт хэв права")
+    #print(message.from_user.id)
+
+
+@dp.message(F.text.lower() == "дроч")
+async def droch(message: Message):
+    if message.reply_to_message.from_user.id == 1307118150:
+        await bot.edit_message_text("я свинья", message.chat.id, message.message_id)
+    else:
+        pass
+
     
 
 @dp.message(Command('777'))
