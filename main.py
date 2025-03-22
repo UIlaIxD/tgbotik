@@ -24,11 +24,11 @@ def rand():
 
 @dp.message(Command('ustart'))
 async def start(message: Message):
-    await message.answer("Хеллоу от UIlaIBot(0.5.3?) и UIlaI\nюзай /uhelp для всех комманд\nруссиан лангуаге для Арсена")
+    await message.answer("РҐРµР»Р»РѕСѓ РѕС‚ UIlaIBot(0.5.3?) Рё UIlaI\nСЋР·Р°Р№ /uhelp РґР»СЏ РІСЃРµС… РєРѕРјРјР°РЅРґ\nСЂСѓСЃСЃРёР°РЅ Р»Р°РЅРіСѓР°РіРµ РґР»СЏ РђСЂСЃРµРЅР°")
  
 @dp.message(Command('uhelp'))
 async def help(message: Message):
-    await message.answer("используй / вместо ! \n!ustart\n!uhelp\n!777\n!footbik\n!basket\n!kosti\n!bigyaitsa\n!dart")
+    await message.answer("РёСЃРїРѕР»СЊР·СѓР№ / РІРјРµСЃС‚Рѕ ! \n!ustart\n!uhelp\n!777\n!footbik\n!basket\n!kosti\n!bigyaitsa\n!dart")
     
 
 @dp.message(Command('777'))
