@@ -1,5 +1,6 @@
 import random
 import logging
+import json
 import os
 import time
 import asyncio
@@ -14,9 +15,12 @@ load_dotenv()
 bot = Bot(os.getenv('TOKEN'))
 dp = Dispatcher() 
 
+
 caslose = [7, 8, 10, 12, 14, 15, 19, 20, 25, 28, 29, 31, 34, 36, 37, 40, 45, 46, 50, 51, 53, 55, 57, 58]
 casduo = [2, 3, 4, 5, 6, 9, 11, 13, 16, 17, 18, 21, 23, 24, 26, 27, 30, 32, 33, 35, 38, 39, 41, 42, 44, 47, 48, 49, 52, 54, 56, 59, 60, 61, 62, 63]
 caswin = [1, 22, 43, 64]
+
+anekdots = []
 
 def rand():
     global randvalue
@@ -24,13 +28,21 @@ def rand():
 
 @dp.message(Command('ustart'))
 async def start(message: Message):
-    await message.answer("Хеллоу от UIlaIBot(0.6.0?) и UIlaI\nюзай /uhelp для всех комманд\nруссиан лангуаге для Арсена")
+    await message.answer("Хеллоу от UIlaIBot(0.6.0?) и UIlaI\nпиши /uhelp для всех комманд")
  
  
 @dp.message(Command('uhelp'))
 async def help(message: Message):
-    #await message.answer("используй / вместо ! \n!ustart\n!uhelp\n!777\n!footbik\n!basket\n!kosti\n!bigyaitsa\n!dart")
-    await message.answer("пошел наху")
+    await message.answer("используй / вместо ! \n!ustart\n!uhelp\n!777\n!footbik\n!basket\n!kosti\n!bigyaitsa\n!dart")
+
+with open("anekdotlist.json", "w") as file:
+    json.dump([90, 91], file)
+
+@dp.message(F.text.lower() == "id")
+async def showid(message: Message):
+    await bot.delete_message(message.chat.id, message.message_id)
+    if message.reply_to_message != None:
+        print(message.reply_to_message.message_id)
 
 
 @dp.message(F.text.lower() == "p")
@@ -54,14 +66,19 @@ async def echo(message: Message, command: CommandObject):
     #print(message.from_user.id)
 
 
-@dp.message(F.text.lower() == "дроч")
-async def droch(message: Message):
-    if message.reply_to_message.from_user.id == 1307118150:
-        await bot.edit_message_text("я свинья", message.chat.id, message.message_id)
-    else:
-        pass
+#@dp.message(F.text.lower() == "дроч")
+#async def droch(message: Message):
+    #if message.reply_to_message.from_user.id == 1307118150:
+    #    pass
+    #else:
+    #    pass
 
-    
+
+@dp.message(Command('anekdot', 'анекдот'))
+async def Funcanekdot(message: Message):
+    joke = await bot.copy_message(message.chat.id, message_id=random.choice(), message_thread_id=message.message_thread_id)
+    print(joke)
+
 
 @dp.message(Command('777'))
 async def slots(message: Message):
