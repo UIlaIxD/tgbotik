@@ -1,9 +1,11 @@
 import random
+import psycopg
 import logging
 import json
 import os
 import time
 import asyncio
+from bdconfig import host, user, password, bd_name
 from aiogram import Dispatcher, Bot, F
 from aiogram.types.dice import DiceEmoji
 from aiogram.filters import Command, CommandObject
@@ -13,7 +15,28 @@ from dotenv import load_dotenv
 global randvalue
 load_dotenv()
 bot = Bot(os.getenv('TOKEN'))
-dp = Dispatcher() 
+dp = Dispatcher()
+
+async def psycopgtest():
+    aconn = psycopg.Connection.connect(
+        host=host,
+        user=user,
+        password=password,
+        dbname=bd_name
+        )
+    aconn.autocommit = True
+    acur = aconn.cursor()
+    try:
+        acur.execute("""
+            CREATE TABLE testik (
+                id serial PRIMARY KEY,
+                num integer,
+                data text);""")
+    except Exception as _ex:
+        print('ahahahah', _ex)
+    aconn.close()
+    acur.close()
+# asyncio.run(psycopgtest())
 
 
 caslose = [7, 8, 10, 12, 14, 15, 19, 20, 25, 28, 29, 31, 34, 36, 37, 40, 45, 46, 50, 51, 53, 55, 57, 58]
@@ -29,20 +52,25 @@ def rand():
 @dp.message(Command('ustart'))
 async def start(message: Message):
     await message.answer("Хеллоу от UIlaIBot(0.6.0?) и UIlaI\nпиши /uhelp для всех комманд")
- 
- 
+
+
+@dp.message()
+async def xdef(message: Message):
+    if message.chat.id == -1002455226402:
+        print('otvet')
+
+
 @dp.message(Command('uhelp'))
 async def help(message: Message):
     await message.answer("используй / вместо ! \n!ustart\n!uhelp\n!777\n!footbik\n!basket\n!kosti\n!bigyaitsa\n!dart")
 
-with open("anekdotlist.json", "w") as file:
-    json.dump([90, 91], file)
 
 @dp.message(F.text.lower() == "id")
 async def showid(message: Message):
     await bot.delete_message(message.chat.id, message.message_id)
     if message.reply_to_message != None:
         print(message.reply_to_message.message_id)
+
 
 
 @dp.message(F.text.lower() == "p")
